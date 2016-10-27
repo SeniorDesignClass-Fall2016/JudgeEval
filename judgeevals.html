@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Senior Design Judge Evals</title>
-<link rel="stylesheet" type="text/css" href="judgeportal.css">
+  <title>Senior Design Judge Evals</title>
+  <link rel="stylesheet" type="text/css" href="judgeportal.css">
+  <!--script type="text/javascript" src="javascript.js"></script-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
+
+  <script type="text/javascript">
+    
+    function calcscore(){
+        var score = 0;
+        $(".calc:checked").each(function(){
+            score+=parseInt($(this).val(),10);
+        });
+        $("input[name=sum]").val(score)
+    }
+    $().ready(function(){
+        $(".calc").change(function(){
+            calcscore()
+        });
+    });
+
+    function calcscore1(){
+        var score1 = 0;
+        $(".calc1:checked").each(function(){
+            score1+=parseInt($(this).val(),10);
+        });
+        $("input[name=sum1]").val(score1)
+    }
+    $().ready(function(){
+        $(".calc1").change(function(){
+            calcscore1()
+        });
+    });
+  </script>
 
 <form>
   <input type="text" name="judgename" placeholder="Judge Name"><br>
@@ -29,7 +60,7 @@
     <h2>Group Members</h2>
     <h2>Advisors</h2>
 
-    <h2>Design Project</h2>
+    <h2>Design Project  <input type="text" name="sum" /></h2> 
     <hr>
 
     <form action="">
@@ -88,57 +119,39 @@
       <input class="calc" type="radio" name="qanda" value="3"> 3
       <input class="calc" type="radio" name="qanda" value="4"> 4
       <input class="calc" type="radio" name="qanda" value="5"> 5
+      
     </form>
 
-    <script type="text/javascript">
-      function calcscore(){
-        var score = 0;
-        $(".calc:checked").each(function(){
-          score+=parseInt($(this).val());
-        });
-        $("input[name=sum]").val(score)
-      }
-
-      $().ready(function()){
-        $(".calc").change(function()){
-          calcscore()
-        }
-      }
-    </script>
-
-    <p>VALUE SHOULD BE HERE</p>
-    <input type="text" name="sum" />
-
-    <h2>Presentation</h2>
+    <h2>Presentation  <input type="text" name="sum1" /></h2> 
     <hr>
     <form>
       <br>Organization <br>
-      <input type="radio" name="organization" value="1"> 1 
-      <input type="radio" name="organization" value="2"> 2 
-      <input type="radio" name="organization" value="3"> 3
-      <input type="radio" name="organization" value="4"> 4
-      <input type="radio" name="organization" value="5"> 5 <br><br>
+      <input class="calc1" type="radio" name="organization" value="1"> 1 
+      <input class="calc1" type="radio" name="organization" value="2"> 2 
+      <input class="calc1" type="radio" name="organization" value="3"> 3
+      <input class="calc1" type="radio" name="organization" value="4"> 4
+      <input class="calc1" type="radio" name="organization" value="5"> 5 <br><br>
 
       Use of Allotted Time <br>
-      <input type="radio" name="time" value="1"> 1 
-      <input type="radio" name="time" value="2"> 2 
-      <input type="radio" name="time" value="3"> 3
-      <input type="radio" name="time" value="4"> 4
-      <input type="radio" name="time" value="5"> 5 <br><br>
+      <input class="calc1" type="radio" name="time" value="1"> 1 
+      <input class="calc1" type="radio" name="time" value="2"> 2 
+      <input class="calc1" type="radio" name="time" value="3"> 3
+      <input class="calc1" type="radio" name="time" value="4"> 4
+      <input class="calc1" type="radio" name="time" value="5"> 5 <br><br>
 
       Visual Aids <br>
-      <input type="radio" name="visuals" value="1"> 1 
-      <input type="radio" name="visuals" value="2"> 2 
-      <input type="radio" name="visuals" value="3"> 3
-      <input type="radio" name="visuals" value="4"> 4
-      <input type="radio" name="visuals" value="5"> 5 <br><br>
+      <input class="calc1" type="radio" name="visuals" value="1"> 1 
+      <input class="calc1" type="radio" name="visuals" value="2"> 2 
+      <input class="calc1" type="radio" name="visuals" value="3"> 3
+      <input class="calc1" type="radio" name="visuals" value="4"> 4
+      <input class="calc1" type="radio" name="visuals" value="5"> 5 <br><br>
 
       Confidence ad Poise <br>
-      <input type="radio" name="confidence" value="1"> 1 
-      <input type="radio" name="confidence" value="2"> 2 
-      <input type="radio" name="confidence" value="3"> 3
-      <input type="radio" name="confidence" value="4"> 4
-      <input type="radio" name="confidence" value="5"> 5
+      <input class="calc1" type="radio" name="confidence" value="1"> 1 
+      <input class="calc1" type="radio" name="confidence" value="2"> 2 
+      <input class="calc1" type="radio" name="confidence" value="3"> 3
+      <input class="calc1" type="radio" name="confidence" value="4"> 4
+      <input class="calc1" type="radio" name="confidence" value="5"> 5
     </form>
 
     <h2>Comments</h2>
