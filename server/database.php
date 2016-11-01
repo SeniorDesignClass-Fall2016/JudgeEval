@@ -19,7 +19,7 @@ $create_project_sql = "CREATE TABLE project (
 id INT NOT NULL AUTO_INCREMENT,
 title VARCHAR(100) NOT NULL,
 description VARCHAR(255) NOT NULL,
-sess VARCHAR(10) NOT NULL,
+session VARCHAR(10) NOT NULL,
 category VARCHAR(30) NOT NULL,
 PRIMARY KEY (id)
 ) ENGINE=INNODB";
@@ -200,6 +200,7 @@ function get_data_for_session($code, $firstname, $lastname) {
 }
 
 function get_scores_by_team($team) {
+    global $db_host, $db_user, $db_pass, $db_name, $db_port;
     $column_keys = array("project_id", "firstname", "lastname", 
                          "techaccuracy", "analytical", "methodical", 
                          "complexity", "completion", "design", 
@@ -209,6 +210,75 @@ function get_scores_by_team($team) {
     $sql_ = "SELECT {$column_keys} FROM judge
              WHERE judge.project_id in ({$team})";
 }    
+
+function get_admin_form_data() {
+    global $db_host, $db_user, $db_pass, $db_name, $db_port; 
+    
+    $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
+    // For Session Data
+    $session_sql = "SELECT distinct session FROM project";
+    $session_data = array();
+    $result = $conn->query($session_sql);
+    while($sess = $result->fetch_array(MYSQLI_NUM)) {
+        if (preg_match("/COEN [0-9]/", $sess[0])) {
+            if (!array_key_exists("COEN", $session_data)) {
+                $session_data["COEN"] = 1;
+            } else {
+                $session_data["COEN"] += 1;
+            }
+        } else if (preg_match("/MECH [0-9]/", $sess[0])) {
+            if (!array_key_exists("MECH", $session_data)) {
+                $session_data["MECH"] = 1;
+            } else {
+                $session_data["MECH"] += 1;
+            }
+        } else if (preg_match("/BIOE [0-9]/", $sess[0])) {
+            if (!array_key_exists("BIOE", $session_data)) {
+                $session_data["BIOE"] = 1;
+            } else {
+                $session_data["BIOE"] += 1;
+            }
+        } else if (preg_match("/CENG [0-9]/", $sess[0])) {
+            if (!array_key_exists("CENG", $session_data)) {
+                $session_data["CENG"] = 1;
+            } else {
+                $session_data["CENG"] += 1;
+            }
+        } else if (preg_match("/INTR [0-9]/", $sess[0])) {
+            if (!array_key_exists("INTR", $session_data)) {
+                $session_data["INTR"] = 1;
+            } else {
+                $session_data["INTR"] += 1;
+            }
+        } 
+      }
+    
+      //Advisor Data
+      $advisor_data = array();
+      $advisor_sql = "SELECT project_id, name FROM advisor";
+      $result = $conn->query($advisor_sql);
+      while($adv = $result->fetch_array(MYSQLI_ASSOC)) {
+          if(!array_key_exists($adv["name"], $advisor_data)) {
+              $advisor_data[$adv["name"]] = array($adv["project_id"]);
+          } else {
+              $advisor_data[$adv["name"]][] = $adv["project_id"];
+          }
+      }
+    
+      //Team Data
+      $team_data = array();
+      $team_sql = "SELECT id, title FROM project";
+      $result = $conn->query($team_sql);
+      while($team = $result->fetch_array(MYSQLI_ASSOC)) {
+          $team_data[$team["title"]] = $team["id"];
+      }
+      $conn->close();      
+      return array(
+                    "session" => $session_data,
+                    "advisor" => $advisor_data,
+                    "team"    => $team_data
+                  );
+}
 
 //function load_table_with_csv($csv_file_path) {
 //    $csv = array_map('str_getcsv', file($csv_file_path));
