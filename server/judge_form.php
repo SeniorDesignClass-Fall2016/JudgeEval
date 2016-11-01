@@ -11,26 +11,18 @@
 //    class JudgeEval() {
 //     };
 include 'database.php';
-
-$REQUIRED_DATA_FIELDS = array("techaccuracy", "creativity", "analytical", 
-                                   "methodical", "complexity", "completion", 
-                                     "design", "qanda", "organization", "time", 
-                                     "visuals", "confidence");
  
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    judgeDB = new JudgeDatabase();
-    $FORM_KEYS = $REQUIRED_DATA_FIELDS;
-    $DATA = array();
-    foreach ($FORM_KEYS as $value) {
-        $DATA[] = $_POST[$value];
-    }
-    $success = judgeDB.insert_key_array($DATA);
-    echo $success;
-    //$judge_eval = JudgeEval($DATA);
-} 
-echo json_encode($DATA);
-/*    foreach ($project_evaluation as $value) {
-        // TODO: Store ratings to datastore
-    }*/
->
+    //foreach ($FORM_KEYS as $value) {
+    //    $DATA[] = $_POST[$value];
+    //}
+    //$success = insert_key_array($DATA);
+    //echo $success;
+    //create_database_schema();
+    $res = insert_cleaned_scores($_POST["data"]);
+    echo json_encode($res);
+} else if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $res = get_data_for_session($_GET["code"], $_GET["firstname"], $_GET["lastname"]);
+    echo json_encode($res); 
+}
+?>
