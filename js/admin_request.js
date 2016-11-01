@@ -9,6 +9,11 @@ $(function() {
         console.log('Prepopulate Data:');
         console.log(data); 
     }); 
+    
+    $.get('server/admin_request.php', {flag: "session", data: ['COEN 1']}, function(data) {
+        console.log('get session data');
+        console.log(data);
+    });
 
     var querymode;
     $( "#scorerequest input[name=querymode]" ).change(function() {

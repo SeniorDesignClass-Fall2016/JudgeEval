@@ -137,21 +137,52 @@ function insert_cleaned_scores($judge_scores) {
 }
 
 function get_scores_by_session($sessions) {
-    $column_keys = array("project_id", "firstname", "lastname", 
+    global $db_host, $db_user, $db_pass, $db_name, $db_port;
+    $column_keys = array("project.title",  
+                         "judge.techaccuracy", "judge.analytical", "judge.methodical", 
+                         "judge.complexity", "judge.completion", "judge.design", 
+                         "judge.qanda", "judge.organization", "judge.time", 
+                         "judge.visuals", "judge.confidence" );
+    $column_ints = array( 
                          "techaccuracy", "analytical", "methodical", 
                          "complexity", "completion", "design", 
                          "qanda", "organization", "time", 
-                         "visuals", "confidence", "total", "comment");
+                         "visuals", "confidence");
+
     $conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);   
-    $get_projects_by_scores_sql = "SELECT {$column_keys} FROM judge
+    $get_projects_by_scores_sql = "SELECT ".implode(",", $column_keys)." FROM judge
                                 INNER JOIN project
                                 ON judge.project_id=project.id
-                                WHERE project.sess in (".implode(",", $sessions).")";
+                                WHERE project.session in ('".implode(",", $sessions)."')";
  
-    $result = $conn->query($sql);
-    $row = $result->fetch_array(MYSQLI_NUM);
+    $result = $conn->query($get_projects_by_scores_sql);
+    if (!$result) {
+        return $conn->error;
+    }
+    $data = array();
+    $session_counts = array();
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        if (!array_key_exists($row["title"], $session_counts)) {
+            $session_counts[$row["title"]] = 1;
+        } else {
+            $session_counts[$row["title"]] += 1;
+        }
+        $total_count = 0;
+        foreach($column_ints as $key) {
+            $total_count += (int)$row[$key];
+        }
+        if (!array_key_exists($row["title"], $data)) {
+            $data[$row["title"]] = $total_count;
+        } else {
+            $data[$row["title"]] += $total_count;
+        } 
+    }
+    foreach($data as $title => $count) {
+        $data[$title] = ((float)$count )/$session_counts[$title];
+    }
+  
     $conn->close();
-    return $row;
+    return $data;
 } 
 
 
@@ -160,7 +191,7 @@ function get_scores_by_advisor($advisor) {
                          "techaccuracy", "analytical", "methodical", 
                          "complexity", "completion", "design", 
                          "qanda", "organization", "time", 
-                         "visuals", "confidence", "total", "comment");
+                         "visuals", "confidence");
     $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
     $sql = "SELECT {$column_keys} FROM judge
             INNER JOIN advisor
@@ -191,12 +222,15 @@ function get_data_for_session($code, $firstname, $lastname) {
     } 
     $session = $SESSION_CODES[$code];
     $get_session_project_sql = "SELECT * FROM project
-                                WHERE sess in ('{$session}')";
+                                WHERE session in ('{$session}')";
     $result = $conn->query($get_session_project_sql);
-    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $data = array();
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $data[] = $row;
+    }
     //TODO: NEED TO GET THE STUDENTS BASED OFF OF THE PROJ ID 
     $conn->close();
-    return $row;
+    return $data;
 }
 
 function get_scores_by_team($team) {
