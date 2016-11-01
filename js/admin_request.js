@@ -1,6 +1,9 @@
 $(function() {
     // Pre populae data
     var formData;
+    $( "#teamselect" ).hide();    
+    $( "#advisorselect").hide();
+
     $.get('server/admin_request.php', { flag: "prepopulate" }, function(data) {
         formData = data;
         console.log('Prepopulate Data:');
@@ -12,6 +15,17 @@ $(function() {
         querymode = $('input[name=querymode]:checked', '#scorerequest').val();     
         console.log('Mode Changed: ');
         console.log(querymode);
+        if (querymode == 'advisor') {
+            $( "#teamselect" ).hide();    
+            $( "#advisorselect").show();
+        } else if (querymode == 'team') {
+            $( "#teamselect" ).show();    
+            $( "#advisorselect").hide();
+        } else {
+            $( "#teamselect" ).hide();    
+            $( "#advisorselect").hide();
+        }
+
     });
 
     $( "#scorerequest").submit(function(event) {
