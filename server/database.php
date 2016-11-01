@@ -210,30 +210,30 @@ function get_scores_by_team($team) {
              WHERE judge.project_id in ({$team})";
 }    
 
-function load_table_with_csv($csv_file_path) {
-    $csv = array_map('str_getcsv', file($csv_file_path));
-    $col_name = array_map('strtolower', array_shift($csv));
-    $project_fields = array();
-    $advisor_fields = array();
-    $student_fields = array();
- 
-    foreach($csv as $row) {
-        foreach(array_values($row) as $i => $col) {
-            if (!$col) {
-                continue;
-            } 
-            $field = $col_name[$i];
-            if fnmatch("[:alpha:]+", $field) {
-            } else if fnmatch("* [0-9]") {
-          
-            } else {
-                continue;
-            }
-        } 
-    }
-    //create_database_schema();    
-    
-    return fnmatch("* [0-9]", "email a");
-}
+//function load_table_with_csv($csv_file_path) {
+//    $csv = array_map('str_getcsv', file($csv_file_path));
+//    $col_name = array_map('strtolower', array_shift($csv));
+//    $project_fields = array();
+//    $advisor_fields = array();
+//    $student_fields = array();
+// 
+//    foreach($csv as $row) {
+//        foreach(array_values($row) as $i => $col) {
+//            if (!$col) {
+//                continue;
+//            } 
+//            $field = $col_name[$i];
+//            if fnmatch("[:alpha:]+", $field) {
+//            } else if fnmatch("* [0-9]") {
+//          
+//            } else {
+//                continue;
+//            }
+//        } 
+//    }
+//    //create_database_schema();    
+//    
+//    return fnmatch("* [0-9]", "email a");
+//}
 ?>
 
