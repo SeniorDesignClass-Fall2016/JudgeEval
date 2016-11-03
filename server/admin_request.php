@@ -18,27 +18,25 @@ function make_table_with_data($data) {
 }
 
 
-echo make_table_with_data(get_scores_by_session(array("COEN 1")));
-//if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//
-//} else if ($_SERVER["REQUEST_METHOD"] == "GET") {
-//    if ($_GET["flag"] == "prepopulate") { 
-//        $admin_data = get_admin_form_data();
-//        echo json_encode($admin_data); 
-//    } else if ($_GET["flag"] == "session") {
-//        //$data = get_scores_by_session($_GET["data"]);
-//        //echo make_table_with_data(  );             
-//    } else if ($_GET["flag"] == "advisor") {
-//        $data = get_scores_by_advisor($_GET["data"]);
-//        echo make_table_with_data(  ); 
-//    } else if ($_GET["flag"] == "team") {
-//        $data = get_scores_by_team($_GET["data"]);
-//        echo make_table_with_data(  ); 
-//    }
-//
-//
-//
-//}
+//echo make_table_with_data(get_scores_by_session(array("COEN 1")));
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+} else if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if ($_GET["flag"] == "prepopulate") { 
+        $admin_data = get_admin_form_data();
+        echo json_encode($admin_data); 
+    } else if ($_GET["flag"] == "session") {
+        $data = get_scores_by_session($_GET["data"]);
+        echo make_table_with_data($data);             
+    } else if ($_GET["flag"] == "advisor") {
+        $data = get_scores_by_advisor($_GET["data"]);
+        echo make_table_with_data($data); 
+    } else if ($_GET["flag"] == "team") {
+        $data = get_scores_by_team($_GET["data"]);
+        echo make_table_with_data($data); 
+    }
+
+}
 
     
 ?>
