@@ -23,9 +23,9 @@
         });
     });
 
-	function alphaNumericSpace(inInput) {
-		inInput.value = inInput.value.replace(/[^\w ]/g, "").replace(/^ +|( ) +/g, "$1");
-	}
+	//function alphaNumericSpace(inInput) {
+		//inInput.value = inInput.value.replace(/[^\w ]/g, "").replace(/^ +|( ) +/g, "$1");
+	//}
 
   </script>
 
@@ -33,17 +33,19 @@
   
 <div id="container">
   <div id="nav">
-	<input type="text" name="firstname" placeholder="First Name" required oninput="alphaNumericSpace(this);"><br>
-	<input type="text" name="judgename" placeholder="Last Name" required oninput="alphaNumericSpace(this);"><br>
-  	<input type="text" name="sessionnum" placeholder="Session Number" required oninput="alphaNumericSpace(this);"><br>
-  	<input type="text" name="roomnum" placeholder="Room Number" required oninput="alphaNumericSpace(this);"><br>
+
+	<!--input type="text" name="firstname" placeholder="First Name" required><br>
+	<input type="text" name="judgename" placeholder="Last Name" required><br-->
+  
+  	<input type="text" name="sessionnum" placeholder="Session Number" required><br>
+  	<input type="text" name="roomnum" placeholder="Room Number" required><br>
     <!-- HOW TO MAKE THIS DYNAMIC? 
     <br><br>
     <button type="button" class="button" onclick="alert('Change nav to group 1')">Group 1</button><br><br>
     <button type="button" class="button" onclick="alert('Change nav to group 2')">Group 2</button><br><br>
     <button type="button" class="button" onclick="alert('Change nav to group 3')">Group 3</button><br><br>
 	-->
-    <br><input type="submit" class="button" name="submit" value="Submit" onclick="validateForm()"><br><br>
+    <br><input type="submit" class="button" name="submit" value="Submit" ><br><br>
   </div>
 
   <div id="form">
@@ -144,7 +146,7 @@
       <input class="calc" type="radio" name="confidence" value="4"> 4
       <input class="calc" type="radio" name="confidence" value="5"> 5 <br><br>
 	
-	<h4>Grand Total (Sum of Design Project and Presentation Totals) <input type="text" name="sum" oninput="alphaNumericSpace(this);"/></h4>
+	<h4>Grand Total (Sum of Design Project and Presentation Totals) <input type="text" name="sum"/></h4>
   	
 	<p>Please circle each of the following considerations that were addressed by the presentation:</p>
 	<table>
@@ -163,7 +165,7 @@
 	</table>
     <h2>Comments</h2>
     <hr>
-    <input type="textarea" name="comment" oninput="alphaNumericSpace(this);"><br>
+    <input type="textarea" name="comment"><br>
 
   </div>
 </div>

@@ -2,15 +2,37 @@
 	width: 800px;
 }
 #nav {
-	width: 100px;
+	width: 250px;
 	float: left;
 }
 
 #form {
-	width: 600px;
+	width: 550px;
 	float:right;
 }
 
+input[type=text], select {
+    width: 200px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=textarea], select {
+    width: 500px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+	rows="4"
+	cols="50"
+}
+	
 .button {
     background-color: #4CAF50; /* Green */
     border: none;
