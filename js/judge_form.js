@@ -1,7 +1,8 @@
 $(function() { 
     var mockGet = { code: "12345",
-                    firstname: "Abe",
-                    lastname: "Millan" };
+                    firstname: "dobby",
+                    lastname: "Mill" };
+
     $.get('server/judge_form.php', mockGet, function(data) {
         console.log('Data Loading Get');
         console.log(data);
