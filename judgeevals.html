@@ -10,22 +10,22 @@
 
   <script type="text/javascript">
     
-    function calcscore(){
-        var score = 0;
-        $(".calc:checked").each(function(){
-            score+=parseInt($(this).val(),10);
-        });
-        $("input[name=sum]").val(score)
-    }
-    $().ready(function(){
-        $(".calc").change(function(){
-            calcscore()
-        });
-    });
+    // function calcscore(){
+    //     var score = 0;
+    //     $(".calc:checked").each(function(){
+    //         score+=parseInt($(this).val(),10);
+    //     });
+    //     $("input[name=sum]").val(score)
+    // }
+    // $().ready(function(){
+    //     $(".calc").change(function(){
+    //         calcscore();
+    //     });
+    // });
 
-	//function alphaNumericSpace(inInput) {
-		//inInput.value = inInput.value.replace(/[^\w ]/g, "").replace(/^ +|( ) +/g, "$1");
-	//}
+  //function alphaNumericSpace(inInput) {
+    //inInput.value = inInput.value.replace(/[^\w ]/g, "").replace(/^ +|( ) +/g, "$1");
+  //}
 
   </script>
 
@@ -34,138 +34,17 @@
 <div id="container">
   <div id="nav">
 
-	<!--input type="text" name="firstname" placeholder="First Name" required><br>
-	<input type="text" name="judgename" placeholder="Last Name" required><br-->
+  <input type="text" name="firstname" placeholder="First Name" required><br>
+  <input type="text" name="lastname" placeholder="Last Name" required><br>
   
-  	<input type="text" name="sessionnum" placeholder="Session Number" required><br>
-  	<input type="text" name="roomnum" placeholder="Room Number" required><br>
-    <!-- HOW TO MAKE THIS DYNAMIC? 
-    <br><br>
-    <button type="button" class="button" onclick="alert('Change nav to group 1')">Group 1</button><br><br>
-    <button type="button" class="button" onclick="alert('Change nav to group 2')">Group 2</button><br><br>
-    <button type="button" class="button" onclick="alert('Change nav to group 3')">Group 3</button><br><br>
-	-->
-    <br><input type="submit" class="button" name="submit" value="Submit" ><br><br>
+    <input type="text" name="sessionnum" placeholder="Session Number" required><br>
+    <input type="text" name="roomnum" placeholder="Room Number" required><br>
+
+  <div id="formbuttons"> </div>  
+  <br><input type="submit" class="button" name="submit" value="Submit" ><br><br>
   </div>
 
   <div id="form">
-    <h3>Project Title</h3>
-	<p>Cool Robot</p>
-    <h3>Group Members</h3>
-	<p>Christen, Abe, Renee</p>
-    <h3>Advisors</h3>
-	<p>Maria Pantoja</p>
-
-    <h2>Design Project  <!--input type="text" name="sum" /--></h2> 
-    <hr>
-
-      <br>Technical Accuracy <br>
-      <input class="calc" type="radio" name="techaccuracy" value="1" checked> 1 
-      <input class="calc" type="radio" name="techaccuracy" value="2"> 2 
-      <input class="calc" type="radio" name="techaccuracy" value="3"> 3
-      <input class="calc" type="radio" name="techaccuracy" value="4"> 4
-      <input class="calc" type="radio" name="techaccuracy" value="5"> 5 <br><br>
-
-      Creativity and Innovation <br>
-      <input class="calc" type="radio" name="creativity" value="1" checked> 1 
-      <input class="calc" type="radio" name="creativity" value="2"> 2 
-      <input class="calc" type="radio" name="creativity" value="3"> 3
-      <input class="calc" type="radio" name="creativity" value="4"> 4
-      <input class="calc" type="radio" name="creativity" value="5"> 5 <br><br>
-
-      Supporting Analytical Work <br>
-      <input class="calc" type="radio" name="analytical" value="1" checked> 1 
-      <input class="calc" type="radio" name="analytical" value="2"> 2 
-      <input class="calc" type="radio" name="analytical" value="3"> 3
-      <input class="calc" type="radio" name="analytical" value="4"> 4
-      <input class="calc" type="radio" name="analytical" value="5"> 5 <br><br>
-
-      Methodical Design Process Demonstrated <br>
-      <input class="calc" type="radio" name="methodical" value="1" checked> 1 
-      <input class="calc" type="radio" name="methodical" value="2"> 2 
-      <input class="calc" type="radio" name="methodical" value="3"> 3
-      <input class="calc" type="radio" name="methodical" value="4"> 4
-      <input class="calc" type="radio" name="methodical" value="5"> 5 <br><br>
-
-      Addresses Project Complexity Appropriately <br>
-      <input class="calc" type="radio" name="complexity" value="1" checked> 1 
-      <input class="calc" type="radio" name="complexity" value="2"> 2 
-      <input class="calc" type="radio" name="complexity" value="3"> 3
-      <input class="calc" type="radio" name="complexity" value="4"> 4
-      <input class="calc" type="radio" name="complexity" value="5"> 5 <br><br>
-
-      Expectation of Completion (by term's end) <br>
-      <input class="calc" type="radio" name="completion" value="1" checked> 1 
-      <input class="calc" type="radio" name="completion" value="2"> 2 
-      <input class="calc" type="radio" name="completion" value="3"> 3
-      <input class="calc" type="radio" name="completion" value="4"> 4
-      <input class="calc" type="radio" name="completion" value="5"> 5 <br><br>
-
-      Design and Analysis of Tests <br>
-      <input class="calc" type="radio" name="design" value="1" checked> 1 
-      <input class="calc" type="radio" name="design" value="2"> 2 
-      <input class="calc" type="radio" name="design" value="3"> 3
-      <input class="calc" type="radio" name="design" value="4"> 4
-      <input class="calc" type="radio" name="design" value="5"> 5 <br><br>
-
-      Quality of Response During Q&amp;A <br>
-      <input class="calc" type="radio" name="qanda" value="1" checked> 1 
-      <input class="calc" type="radio" name="qanda" value="2"> 2 
-      <input class="calc" type="radio" name="qanda" value="3"> 3
-      <input class="calc" type="radio" name="qanda" value="4"> 4
-      <input class="calc" type="radio" name="qanda" value="5"> 5
-
-    <h2>Presentation  <!--input type="text" name="sum1" /--></h2> 
-    <hr>
-
-      <br>Organization <br>
-      <input class="calc" type="radio" name="organization" value="1" checked> 1 
-      <input class="calc" type="radio" name="organization" value="2"> 2 
-      <input class="calc" type="radio" name="organization" value="3"> 3
-      <input class="calc" type="radio" name="organization" value="4"> 4
-      <input class="calc" type="radio" name="organization" value="5"> 5 <br><br>
-
-      Use of Allotted Time <br>
-      <input class="calc" type="radio" name="time" value="1" checked> 1 
-      <input class="calc" type="radio" name="time" value="2"> 2 
-      <input class="calc" type="radio" name="time" value="3"> 3
-      <input class="calc" type="radio" name="time" value="4"> 4
-      <input class="calc" type="radio" name="time" value="5"> 5 <br><br>
-
-      Visual Aids <br>
-      <input class="calc" type="radio" name="visuals" value="1" checked> 1 
-      <input class="calc" type="radio" name="visuals" value="2"> 2 
-      <input class="calc" type="radio" name="visuals" value="3"> 3
-      <input class="calc" type="radio" name="visuals" value="4"> 4
-      <input class="calc" type="radio" name="visuals" value="5"> 5 <br><br>
-
-      Confidence and Poise <br>
-      <input class="calc" type="radio" name="confidence" value="1" checked> 1 
-      <input class="calc" type="radio" name="confidence" value="2"> 2 
-      <input class="calc" type="radio" name="confidence" value="3"> 3
-      <input class="calc" type="radio" name="confidence" value="4"> 4
-      <input class="calc" type="radio" name="confidence" value="5"> 5 <br><br>
-	
-	<h4>Grand Total (Sum of Design Project and Presentation Totals) <input type="text" name="sum"/></h4>
-  	
-	<p>Please circle each of the following considerations that were addressed by the presentation:</p>
-	<table>
-		<tr>
-			<th><input id="check" type="checkbox" name="considerations" value="economic">Economic</th>
-			<th><input id="check" type="checkbox" name="considerations" value="environmental">Environmental</th>
-			<th><input id="check" type="checkbox" name="considerations" value="sustainability">Sustainability</th>
-			<th><input id="check" type="checkbox" name="considerations" value="manufacturability">Manufacturability</th>
-		</tr>
-		<tr>
-			<th><input id="check" type="checkbox" name="considerations" value="ethical">Ethical</th>
-			<th><input id="check" type="checkbox" name="considerations" value="healthsafety">Health and Safety</th>
-			<th><input id="check" type="checkbox" name="considerations" value="social">Social</th>
-			<th><input id="check" type="checkbox" name="considerations" value="political">Political</th>
-		</tr>
-	</table>
-    <h2>Comments</h2>
-    <hr>
-    <input type="textarea" name="comment"><br>
 
   </div>
 </div>
