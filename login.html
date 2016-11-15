@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Judge Login</title>
+	<link rel="stylesheet" type="text/css" href="judgeportal.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script type="text/javascript">
+		function validate(){
+			if(document.getElementById("code").value != 12345){
+				alert("Invalid session code");
+				return false;
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="container">
+		<div id="header">Judge Login</div>
+		<form action="judgeevals.html" method="get" onsubmit="return validate()">
+	 			<br><br>
+	    		<label><b>Session Code</b></label><br/>
+	    		<input type="text" id="code" placeholder="Enter Session Code" name="code" required><br/>
+
+	    		<label><b>First Name</b></label><br/>
+	    		<input type="text" placeholder="Enter First Name" name="firstname" required><br/>
+
+	    		<label><b>Last Name</b></label><br/>
+	    		<input type="text" placeholder="Enter Last Name" name="lastname" required><br/><br/>
+
+	    		<p>Admin? Login <a href="admin_login.html">here</a>.</p><br/>
+	        
+	    		<button class="button"  type="submit">Login</button><br/>
+
+
+		</form>
+	</div>
+
+</body>
+</html>
