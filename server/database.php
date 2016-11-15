@@ -160,15 +160,19 @@ function get_scores_by($method, $data) {
                          "visuals", "confidence", "comment" );
     $data_string = implode(",", $data_columns);
     if ($method == "session") {
+        foreach($data as $i => $string) {
+            $data[$i] = "'".$string."'";
+        }
         $session_string = "(".implode(",", $data).")";
-
+        
+        //echo json_encode($session_string);
         $sql =  "SELECT ".$data_string." FROM judge
                  INNER JOIN project
-                 judge.project_id=project.id
+                 ON judge.project_id=project.id
                  WHERE project.session in {$session_string}";
      
     } else if ($method == "advisor") {
-        $advisor = $data;
+        $advisor = "'".$data."'";
         
         $sql = "SELECT ".$data_string." FROM judge
             INNER JOIN advisor
@@ -452,6 +456,7 @@ function load_table_with_csv($csv_file_path) {
 
 function array_to_csv_download($data, $mode, $filename = "export.csv", $delimiter=",") {
         
+    //echo json_encode($data);
     $array = array();
       
     $array[] = array("Scoring Summary (By Title):", "Average Score");
@@ -460,12 +465,12 @@ function array_to_csv_download($data, $mode, $filename = "export.csv", $delimite
     }
 
     $array[] = array(" ");
-    
+    $array[] = array("INDIVIDUAL PRESENTATION SCORES");
     foreach($data as $title => $row) {
         
-        $array[] = array("INDIVIDUAL PRESENTATION SCORES");
         $array[] = array(" ");
         $array[] = array(" ");
+        $array[] = array($title);
         $judge_label = array(" ");
         foreach ($row["scores"] as $i => $scores) {
             $num = $i + 1;
