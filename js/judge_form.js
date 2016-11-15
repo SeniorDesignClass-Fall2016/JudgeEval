@@ -176,9 +176,9 @@ $(function() {
                                     +' <input class="calc'+z+'" type="radio" name="confidence'+z+'" value="5"> 5 <br><br>';
 
             var sum = document.createElement('div');
-
             sum.innerHTML = '<h4>Grand Total (Sum of Design Project and Presentation Totals) <input type="text" name="sum'+z+'"/></h4>';
             sum.setAttribute("id", "sum"+z);
+            
             var table = document.createElement('div');
             table.innerHTML = '<p>Please select each of the following considerations that were addressed by the presentation:</p>'
                                 +'<table><tr>'
@@ -272,43 +272,33 @@ $(function() {
         
 //    }
     
-        var mockData = { data: [{"project_id": "1", 
-                                  "firstname": "Abe",
-                                   "lastname": "Millan", 
-                               "techaccuracy": "1",
-                                 "creativity": "4",
-                                 "analytical": "2",
-                                 "methodical": "3", 
-                                 "complexity": "4",
-                                 "completion": "5",
-                                     "design": "4", 
-                                      "qanda": "3", 
-                               "organization": "2", 
-                                       "time": "1", 
-                                    "visuals": "2", 
-                                 "confidence": "3", 
-                                      "total": "2", 
-                                    "comment": "Good Job"}] };
-
         console.log("sum is "+document.getElementsByName('sum')[0].value);
        
-        var formData = { data: [{"project_id": document.getElementById("projectid").value, 
-                                  "firstname": document.getElementsByName('firstname')[0].value,
-                                   "lastname": document.getElementsByName('lastname')[0].value, 
-                               "techaccuracy": document.querySelector('input[name="techaccuracy"]:checked').value,
-                                 "creativity": document.querySelector('input[name="creativity"]:checked').value,
-                                 "analytical": document.querySelector('input[name="analytical"]:checked').value,
-                                 "methodical": document.querySelector('input[name="methodical"]:checked').value, 
-                                 "complexity": document.querySelector('input[name="complexity"]:checked').value,
-                                 "completion": document.querySelector('input[name="completion"]:checked').value,
-                                     "design": document.querySelector('input[name="design"]:checked').value, 
-                                      "qanda": document.querySelector('input[name="qanda"]:checked').value, 
-                               "organization": document.querySelector('input[name="organization"]:checked').value, 
-                                       "time": document.querySelector('input[name="time"]:checked').value, 
-                                    "visuals": document.querySelector('input[name="visuals"]:checked').value, 
-                                 "confidence": document.querySelector('input[name="confidence"]:checked').value, 
-                                      "total": document.getElementsByName('sum')[0].value, 
-                                    "comment": document.getElementsByName('comment')[0].value}] };
+        var allData = [];
+        for(int idIndex=0; idIndex<formCount; idIndex++){
+            var newEntry = {"project_id": document.getElementById("projectid").value, 
+                            "firstname": document.getElementsByName('firstname')[0].value,
+                            "lastname": document.getElementsByName('lastname')[0].value, 
+                            "techaccuracy": document.querySelector('input[name="techaccuracy'+z+'"]:checked').value,
+                            "creativity": document.querySelector('input[name="creativity'+z+'"]:checked').value,
+                            "analytical": document.querySelector('input[name="analytical'+z+'"]:checked').value,
+                            "methodical": document.querySelector('input[name="methodical'+z+'"]:checked').value, 
+                            "complexity": document.querySelector('input[name="complexity'+z+'"]:checked').value,
+                            "completion": document.querySelector('input[name="completion'+z+'"]:checked').value,
+                            "design": document.querySelector('input[name="design'+z+'"]:checked').value, 
+                            "qanda": document.querySelector('input[name="qanda'+z+'"]:checked').value, 
+                            "organization": document.querySelector('input[name="organization'+z+'"]:checked').value, 
+                            "time": document.querySelector('input[name="time'+z+'"]:checked').value, 
+                            "visuals": document.querySelector('input[name="visuals'+z+'"]:checked').value, 
+                            "confidence": document.querySelector('input[name="confidence'+z+'"]:checked').value, 
+                            "total": document.getElementsByName('sum'+z)[0].value, 
+                            "comment": document.getElementsByName('comment'+z)[0].value};
+
+            allData.push(newEntry);
+
+        }
+
+        var formData = { data: allData };
              
         // var formData = { data: [{"project_id": document.getElementById("projectid").value, 
         //                           "firstname": document.getElementsByName('firstname')[0].value,
