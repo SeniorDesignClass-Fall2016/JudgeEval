@@ -5,10 +5,10 @@ $(function() {
         var teamData = formData['team'];
         var advisorData = formData['advisor'];
         var sessionData = formData['session'];  
-        console.log(sessionData); 
-        console.log(advisorData); 
-        console.log(teamData);
-        console.log("PAGE IS UPDATED");
+        //console.log(sessionData); //check sessions
+        //console.log(advisorData); //check advisors
+        //console.log(teamData); //check teams
+        console.log("PAGE IS UPDATED 1");
         
         if (!Object.keys(sessionData).length) {
                 $( "#session").append("<p> Sorry, No Departments</p>"); 
@@ -71,7 +71,10 @@ $(function() {
         $( "#team" ).hide();    
         $( "#advisor").hide(); 
         $( "#session").hide();
+    }); 
 
+
+	// Form submit data
         var fieldtitle; var numArray;
         var submitQuery = []; var chosenquery = [];
         $("#scorerequest").submit(function(event){
@@ -82,40 +85,37 @@ $(function() {
                 //    test = field.value; chosenquery[test] = parseInt(field.value);
                  // }           
                  if(field.name == "session" ){
-                      console.log('-- SESSION CHOSEN');
-                      console.log('field.name: '+field.name);
-                      console.log('field.value: '+field.value);
+                      //console.log('-- SESSION CHOSEN');
+                      //console.log('field.name: '+field.name);
+                      //console.log('field.value: '+field.value);
                       fieldtitle = field.name;
                       chosenquery.push(field.value);
                   }
                  else if(field.name == "advisor"){
-                      console.log('-- ADVISOR CHOSEN');
-                      console.log('field.name: '+field.name);
-                      console.log('field.value: '+field.value);
+                      //console.log('-- ADVISOR CHOSEN');
+                      //console.log('field.name: '+field.name);
+                      //console.log('field.value: '+field.value);
                       numArray = field.value.split(",");
                       fieldtitle = field.name;
                       chosenquery = numArray;
                   }
                  else if(field.name == "team"){
-                      console.log('-- TEAM CHOSEN');
-                      console.log('field.name: '+field.name);
-                      console.log('field.value: '+field.value);
+                      //console.log('-- TEAM CHOSEN');
+                      //console.log('field.name: '+field.name);
+                      //console.log('field.value: '+field.value);
                       fieldtitle = field.name;
                       chosenquery = field.value;
                   }                         
                 });
-                console.log("++ Submit Query: "+chosenquery);
+                console.log("++ Submit Query:");
                 console.log(chosenquery);
                 submitQuery = {flag: fieldtitle, data: chosenquery};
-                console.log("++ Final Submit");  
+                console.log("++ Final Query:");
                 console.log(submitQuery);
-                console.log(submitQuery.data);
-                //chosenquery=[];
+                chosenquery=[]; // Clear query
               
-                $.post("server/admin_request.php",submitQuery,function(){console.log("Submitted Form") });
-                });
+         });
     
-    }); 
 
     // Show the chosen section and hide the others until revealed
     var querymode;
@@ -152,15 +152,14 @@ $(function() {
         //$("#teamselect).val('0');
     });
 
-    /*$( "#scorerequest").submit(function(event) {
+    $( "#scorerequest").submit(function(event) {
     
     //TODO Validation
         event.preventDefault();
-
         mockDataSession = {flag: "session",
                            data: ["COEN 1", "COEN 2"] };
         mockDataAdvisor = {flag: "advisor",
                            data: ["0"] };
-    });*/
+    });
 
 });
