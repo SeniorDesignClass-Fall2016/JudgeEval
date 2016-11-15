@@ -1,14 +1,16 @@
 #container1 {
-	width: 800px;
+  width: 800px;
 }
 #nav {
-	width: 250px;
-	float: left;
+  width: 250px;
+  float: left;
+  margin-top: 50px;
 }
 
 #form {
-	width: 550px;
-	float:right;
+  width: 550px;
+  float:right;
+  background-color:white;
 }
 
 input[type=text], input[type=password] ,select {
@@ -29,26 +31,6 @@ input[type=textarea], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-	rows="4"
-	cols="50"
-}
-	
-.button , .buttonClass {
-    background-color: #cb4e4e;
-    color: #fff;
-    border: none;
-    font-family: inherit;
-    font-size: inherit;
-    cursor: pointer;
-    padding: 20px 80px;
-    display: inline-block;
-    margin: 15px 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    outline: none;
-    position: relative;
-    padding: 10px 50px 10px 50px;
-    margin: 10px;
-    box-shadow: 0 6px #ab3c3c;
+  rows="4"
+  cols="50"
 }

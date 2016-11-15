@@ -49,7 +49,7 @@ $(function() {
         } else {
             $( "#advisor").append('<div id="advisorselect"><h2>Advisor List</h2>');
             for (var key in advisorData) {
-                $( "#advisorselect").append('<input name="advisor" type="radio" value="' + advisorData[key] + '">' + key + '</input></br>'); 
+                $( "#advisorselect").append('<input name="advisor" type="radio" value="' + key + '">' + key + '</input></br>'); 
             }
          }
         
@@ -92,12 +92,12 @@ $(function() {
                       chosenquery.push(field.value);
                   }
                  else if(field.name == "advisor"){
-                      //console.log('-- ADVISOR CHOSEN');
-                      //console.log('field.name: '+field.name);
-                      //console.log('field.value: '+field.value);
-                      numArray = field.value.split(",");
+                      console.log('-- ADVISOR CHOSEN');
+                      console.log('field.name: '+field.name);
+                      console.log('field.value: '+field.value);
+                      //numArray = field.value.split(",");
                       fieldtitle = field.name;
-                      chosenquery = numArray;
+                      chosenquery = field.value;
                   }
                  else if(field.name == "team"){
                       //console.log('-- TEAM CHOSEN');
@@ -112,8 +112,19 @@ $(function() {
                 submitQuery = {flag: fieldtitle, data: chosenquery};
                 console.log("++ Final Query:");
                 console.log(submitQuery);
-                //$.get('server/admin_request.php', submitQuery , function() {
-                document.location.href = 'server/admin_request.php?flag='+fieldtitle+'&data='+chosenquery;
+               
+                var url; 
+
+                if (fieldtitle == "session") {
+                    url = 'server/admin_request.php?flag='+fieldtitle;
+                    chosenquery.forEach(function(element) {
+                        url += "&";
+                        url += "data[]=" + element; 
+                    });
+                } else {
+                    url = 'server/admin_request.php?flag='+fieldtitle+'&data='+chosenquery;
+                }
+                document.location.href = url; 
                 //    console.log(data);
                 //});
 
