@@ -99,8 +99,8 @@ function reset_database_schema() {
 }
 
 function insert_judge_scores($judge_scores) {
-    $schema = array("project_id", "firstname", "lastname", 
-                         "techaccuracy", "analytical", "methodical", 
+    $schema = array("project_id", "firstname", "lastname",   
+                         "techaccuracy", "creativity", "analytical", "methodical", 
                          "complexity", "completion", "design", 
                          "qanda", "organization", "time", 
                          "visuals", "confidence", "total", "comment");
@@ -151,86 +151,99 @@ function insert_cleaned_array_into_table($table_name, $schema, $data_array) {
 
 }
 
-function get_scores_by_session($sessions) {
+function get_scores_by($method, $data) {
     global $db_host, $db_user, $db_pass, $db_name, $db_port;
-    $column_keys = array("project.title",  
-                         "judge.techaccuracy", "judge.analytical", "judge.methodical", 
-                         "judge.complexity", "judge.completion", "judge.design", 
-                         "judge.qanda", "judge.organization", "judge.time", 
-                         "judge.visuals", "judge.confidence" );
-    $column_ints = array( 
+    $data_columns = array("project.title", "firstname", "lastname", "creativity",
                          "techaccuracy", "analytical", "methodical", 
                          "complexity", "completion", "design", 
                          "qanda", "organization", "time", 
-                         "visuals", "confidence");
+                         "visuals", "confidence", "comment" );
+    $data_string = implode(",", $data_columns);
+    if ($method == "session") {
+        $session_string = "(".implode(",", $data).")";
+
+        $sql =  "SELECT ".$data_string." FROM judge
+                 INNER JOIN project
+                 judge.project_id=project.id
+                 WHERE project.session in {$session_string}";
+     
+    } else if ($method == "advisor") {
+        $advisor = $data;
+        
+        $sql = "SELECT ".$data_string." FROM judge
+            INNER JOIN advisor
+            ON judge.project_id=advisor.project_id
+            INNER JOIN project
+            ON judge.project_id=project.id
+            WHERE advisor.name in ({$advisor})";
+
+    
+    } else if ($method == "team") {
+        $team = $data; 
+        $sql = "SELECT ".$data_string." FROM judge
+                INNER JOIN project
+                ON judge.project_id=project.id
+                WHERE judge.project_id in ({$team})";
+    } else {
+        return false; 
+    }
 
     $conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);   
-    $get_projects_by_scores_sql = "SELECT ".implode(",", $column_keys)." FROM judge
-                                INNER JOIN project
-                                ON judge.project_id=project.id
-                                WHERE project.session in ('".implode(",", $sessions)."')";
- 
-    $result = $conn->query($get_projects_by_scores_sql);
+    $result = $conn->query($sql);
     if (!$result) {
         return $conn->error;
     }
     $data = array();
     $session_counts = array();
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        if (!array_key_exists($row["title"], $session_counts)) {
-            $session_counts[$row["title"]] = 1;
-        } else {
-            $session_counts[$row["title"]] += 1;
+        $data[] = $row; 
+    }
+
+    $conn->close();
+
+    return prepare_score_data_for_csv($data);
+
+}
+
+function prepare_score_data_for_csv($data) {
+    // This function takes in rows of Judge evaluation and converts 
+    // into a dictionary where keys are project titles and values are dictionaries
+    // of with keysscores, to score, and comment
+    // { "title": { "scores": array(), "avg_score": int}}
+    $out_data = array();
+
+    // First pass combines judge scores by key
+    foreach($data as $row) {
+        $comment = $row["comment"];
+        $title = $row["title"];
+        unset($row["comment"]);
+        unset($row["title"]);
+        if (!array_key_exists($title, $out_data)) {
+            $out_data[$title]["scores"] = array();
         }
-        $total_count = 0;
-        foreach($column_ints as $key) {
-            $total_count += (int)$row[$key];
-        }
-        if (!array_key_exists($row["title"], $data)) {
-            $data[$row["title"]] = $total_count;
-        } else {
-            $data[$row["title"]] += $total_count;
+        // Sum up scores for totals score
+        $total_score = array_sum(array_map('intval', $row));
+
+        $row["total_score"] = $total_score;
+        $row["comment"] = $comment;
+        $out_data[$title]["scores"][] = $row;
+    }
+   
+    // Second pass adds the avg score to each key 
+    foreach($out_data as $title => $row) {
+        $number_of_evals = count($row["scores"]);
+        $total_scores = 0;
+        foreach($row["scores"] as $scores) {
+            $total_scores += $scores["total_score"];
         } 
+        $out_data[$title]["avg_score"] = ((double) $total_scores) / $number_of_evals;
     }
-    foreach($data as $title => $count) {
-        $data[$title] = ((float)$count )/$session_counts[$title];
-    }
-  
-    $conn->close();
-    return $data;
-} 
 
-
-function get_scores_by_advisor($advisor) {
-    $column_keys = array("project_id", "firstname", "lastname", 
-                         "techaccuracy", "analytical", "methodical", 
-                         "complexity", "completion", "design", 
-                         "qanda", "organization", "time", 
-                         "visuals", "confidence");
-    $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
-    $sql = "SELECT {$column_keys} FROM judge
-            INNER JOIN advisor
-            ON judge.project_id=advisor.project_id
-            WHERE advisor.name in ({$advisor})";
-    $result = $conn->query($sql);
-    $row = $result->fetch_array(MYSQLI_NUM);
-    $conn->close();
-    return $row; 
+    return $out_data;
 }
+    
 
-function get_scores_by_team($team) {
-    global $db_host, $db_user, $db_pass, $db_name, $db_port;
-    $column_keys = array("project_id", "firstname", "lastname", 
-                         "techaccuracy", "analytical", "methodical", 
-                         "complexity", "completion", "design", 
-                         "qanda", "organization", "time", 
-                         "visuals", "confidence", "total", "comment");
-    $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
-    $sql_ = "SELECT {$column_keys} FROM judge
-             WHERE judge.project_id in ({$team})";
-}
-
-function get_data_for_session($code, $firstname, $lastname) {
+function get_data_for_judgeform($code, $firstname, $lastname) {
     // THE FIRST PART OF THIS SHOULD PROBABLY BE PART OF AUTHENTATION METHOD
     global $db_host, $db_user, $db_pass, $db_name, $db_port;
     global $SESSION_CODES; 
@@ -260,7 +273,7 @@ function get_data_for_session($code, $firstname, $lastname) {
     return $data;
 }
 
-function get_admin_form_data() {
+function get_data_for_adminform() {
     global $db_host, $db_user, $db_pass, $db_name, $db_port; 
     
     $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
@@ -395,6 +408,7 @@ function load_table_with_csv($csv_file_path) {
                 unset($students_per_row[$j]);
             } else {
                 $students_per_row[$j]["project_id"] = $ith_csv_row + 1;  
+                // Sort to ensure correct db insertion
                 ksort($students_per_row[$j]);
             }
         }
@@ -434,6 +448,138 @@ function load_table_with_csv($csv_file_path) {
         return TRUE;
     }
 
+}
+
+function array_to_csv_download($data, $mode, $filename = "export.csv", $delimiter=",") {
+    header('Content-Type: application/csv');
+    header('Content-Disposition: attachment; filename="'.$filename.'";');
+    
+    $array = array();
+      
+    $array[] = array("Scoring Summary (By Title):", "Average Score");
+    // Average Score Summaries
+    foreach($data as $title => $row) {
+        $array[] = array($title, "{$row["avg_score"]}");
+    }
+
+    $array[] = array(" ");
+    
+    foreach($data as $title => $row) {
+        
+        $array[] = array("INDIVIDUAL PRESENTATION SCORES");
+        $array[] = array(" ");
+        $array[] = array(" ", "INDIVIDUAL JUDGE'S SCORING RESULTS FOR THE INDICATED TITLE");
+        $array[] = array(" ");
+        $judge_label = array(" ");
+        foreach ($row["scores"] as $i => $scores) {
+            $num = $i + 1;
+            $judge_label[] = "JUDGE #"."{$num}"; 
+        }
+        $first_names = array("First Name");
+        foreach ($row["scores"] as $i => $scores) {
+            $first_names[] = $scores["firstname"]; 
+        }
+        $last_names = array("Last Name");
+        foreach ($row["scores"] as $i => $scores) {
+            $last_names[] = $scores["lastname"]; 
+        }
+        
+        $array[] = $first_names;
+        $array[] = $last_names;
+        
+        $techaccuracys = array("Technical Accuracy");
+        foreach ($row["scores"] as $i => $scores) {
+            $techaccuracys [] = $scores["techaccuracy"]; 
+        }
+        $array[] = $techaccuracys;
+        
+        $creativities = array("Creativity and Innovation");
+        foreach ($row["scores"] as $i => $scores) {
+            $creativities[] = $scores["creativity"]; 
+        }
+        $array[] = $creativities;
+
+        $analyticals = array("Supporting Analytical Work");
+        foreach ($row["scores"] as $i => $scores) {
+            $analyticals[] = $scores["analytical"]; 
+        }
+        $array[] = $analyticals;
+        $methodicals = array("Methodical Design Process Dem");
+        foreach ($row["scores"] as $i => $scores) {
+            $methodicals[] = $scores["methodical"]; 
+        }
+        $array[] = $methodicals;
+      
+        $complexities = array("Addresses Project Complexity");
+        foreach ($row["scores"] as $i => $scores) {
+            $complexities[] = $scores["complexity"]; 
+        }
+        $array[] = $complexities;
+
+        $completions = array("Completeness");
+        foreach ($row["scores"] as $i => $scores) {
+            $completions[] = $scores["completion"]; 
+        }
+        $array[] = $completions;
+
+        $designs = array("Design and Analysis of Tests");
+        foreach ($row["scores"] as $i => $scores) {
+            $designs[] = $scores["design"]; 
+        }
+        $array[] = $designs;
+    
+        $qandas = array("Quality of Response During Q&A");
+        foreach ($row["scores"] as $i => $scores) {
+            $qandas[] = $scores["qanda"]; 
+        }
+        $array[] = $qandas;
+
+        $organizations = array("Organization");
+        foreach ($row["scores"] as $i => $scores) {
+            $organizations[] = $scores["organization"]; 
+        }
+        $array[] = $organizations;
+
+        $times = array("Time Allotment");
+        foreach ($row["scores"] as $i => $scores) {
+            $times[] = $scores["time"]; 
+        }
+        $array[] = $times;
+
+        $visuals = array("Visual Aids");
+        foreach ($row["scores"] as $i => $scores) {
+            $visuals[] = $scores["visuals"]; 
+        }
+        $array[] = $visuals;
+
+        $confidences = array("Confidence and Poise");
+        foreach ($row["scores"] as $i => $scores) {
+            $confidences[] = $scores["confidence"]; 
+        }
+        $array[] = $confidences;
+        $array[] = array(" ");
+
+        $totals = array("            Total Score = ");
+        foreach ($row["scores"] as $i => $scores) {
+            $totals[] = $scores["total_score"]; 
+        }
+        $array[] = $totals;
+        $array[] = array(" ");
+        $array[] = array("       Average Judges' Score =", "{$row["avg_score"]}");
+        $array[] = array(" ");
+        $array[] = array(" "); 
+        $array[] = array(" ");
+
+    }
+    
+         
+    // open the "output" stream
+    // see http://www.php.net/manual/en/wrappers.php.php#refsect2-wrappers.php-unknown-unknown-unknown-descriptioq
+    $f = fopen('php://output', 'w');
+
+    foreach ($array as $line) {
+        fputcsv($f, $line, $delimiter);
+    }
 }
 ?>
 
