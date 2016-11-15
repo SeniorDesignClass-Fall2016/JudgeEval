@@ -284,8 +284,8 @@ $(function() {
         //pushes each form as a dictionary into the array
         for(idIndex=0; idIndex<formCount; idIndex++){
             var newEntry = {"project_id": document.getElementById("projectid"+idIndex).value, 
-                            "firstname": mockGet.firstname,
-                            "lastname": mockGet.lastname, 
+                            "firstname": dataGet.firstname,
+                            "lastname": dataGet.lastname, 
                             "techaccuracy": document.querySelector('input[name="techaccuracy'+idIndex+'"]:checked').value,
                             "creativity": document.querySelector('input[name="creativity'+idIndex+'"]:checked').value,
                             "analytical": document.querySelector('input[name="analytical'+idIndex+'"]:checked').value,

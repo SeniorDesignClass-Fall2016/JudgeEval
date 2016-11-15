@@ -451,13 +451,10 @@ function load_table_with_csv($csv_file_path) {
 }
 
 function array_to_csv_download($data, $mode, $filename = "export.csv", $delimiter=",") {
-    header('Content-Type: application/csv');
-    header('Content-Disposition: attachment; filename="'.$filename.'";');
-    
+        
     $array = array();
       
     $array[] = array("Scoring Summary (By Title):", "Average Score");
-    // Average Score Summaries
     foreach($data as $title => $row) {
         $array[] = array($title, "{$row["avg_score"]}");
     }
@@ -468,18 +465,18 @@ function array_to_csv_download($data, $mode, $filename = "export.csv", $delimite
         
         $array[] = array("INDIVIDUAL PRESENTATION SCORES");
         $array[] = array(" ");
-        $array[] = array(" ", "INDIVIDUAL JUDGE'S SCORING RESULTS FOR THE INDICATED TITLE");
         $array[] = array(" ");
         $judge_label = array(" ");
         foreach ($row["scores"] as $i => $scores) {
             $num = $i + 1;
             $judge_label[] = "JUDGE #"."{$num}"; 
         }
-        $first_names = array("First Name");
+        $array[] = $judge_label;
+        $first_names = array("Judge First Name");
         foreach ($row["scores"] as $i => $scores) {
             $first_names[] = $scores["firstname"]; 
         }
-        $last_names = array("Last Name");
+        $last_names = array("Judge Last Name");
         foreach ($row["scores"] as $i => $scores) {
             $last_names[] = $scores["lastname"]; 
         }
@@ -572,7 +569,9 @@ function array_to_csv_download($data, $mode, $filename = "export.csv", $delimite
 
     }
     
-         
+    header('Content-Type: application/csv');
+    header('Content-Disposition: attachment; filename="'.$filename.'";');
+    
     // open the "output" stream
     // see http://www.php.net/manual/en/wrappers.php.php#refsect2-wrappers.php-unknown-unknown-unknown-descriptioq
     $f = fopen('php://output', 'w');

@@ -112,8 +112,14 @@ $(function() {
                 submitQuery = {flag: fieldtitle, data: chosenquery};
                 console.log("++ Final Query:");
                 console.log(submitQuery);
+                //$.get('server/admin_request.php', submitQuery , function() {
+                document.location.href = 'server/admin_request.php?flag='+fieldtitle+'&data='+chosenquery;
+                //    console.log(data);
+                //});
+
                 chosenquery=[]; // Clear query
-              
+
+                 
          });
     
 
@@ -152,14 +158,14 @@ $(function() {
         //$("#teamselect).val('0');
     });
 
-    $( "#scorerequest").submit(function(event) {
-    
-    //TODO Validation
-        event.preventDefault();
-        mockDataSession = {flag: "session",
-                           data: ["COEN 1", "COEN 2"] };
-        mockDataAdvisor = {flag: "advisor",
-                           data: ["0"] };
-    });
+//    $( "#scorerequest").submit(function(event) {
+//    
+//    //TODO Validation
+//        event.preventDefault();
+//        mockDataSession = {flag: "session",
+//                           data: ["COEN 1", "COEN 2"] };
+//        mockDataAdvisor = {flag: "advisor",
+//                           data: ["0"] };
+//    });
 
 });
