@@ -13,22 +13,27 @@
 	</script>
 </head>
 <body>
-	<form action="judgeevals.html" method="get">
+	<div align="center">
+	<h2>Judge Login</h2>
+	<form action="judgeevals.html" method="get" onsubmit="return validate()">
 	  <div class="container">
-	    <label><b>Session Code</b></label>
+	    <label><b>Session Code</b></label><br/>
 	    <input type="text" id="code" placeholder="Enter Session Code" name="code" required><br/>
 
-	    <label><b>First Name</b></label>
+	    <label><b>First Name</b></label><br/>
 	    <input type="text" placeholder="Enter First Name" name="firstname" required><br/>
 
-	    <label><b>Last Name</b></label>
-	    <input type="text" placeholder="Enter Last Name" name="lastname" required><br/>
+	    <label><b>Last Name</b></label><br/>
+	    <input type="text" placeholder="Enter Last Name" name="lastname" required><br/><br/>
+
+	    <a href="admin_login.html">If you are an admin, please click here to login</a><br/><br/>
 	        
-	    <button class="button" onclick="validate()" type="submit">Login</button><br/>
+	    <button class="button"  type="submit">Login</button><br/>
 
 	  </div>
 
 	</form>
+	</div>
 
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Judge Login</title>
+	<link rel="stylesheet" type="text/css" href="judgeportal.css">
+	<script type="text/javascript">
+		function validate(){
+			username = document.getElementById("username").value;
+			password = document.getElementById("password").value;
+			if(username != "swibeto" && password != "gobroncos"){
+				alert("Invalid login");
+				return false;
+			}
+		}
+	</script>
+</head>
+<body>
+	<div align="center">
+	<h2>Admin Login</h2>
+	<form action="adminView.html" method="get" onsubmit="return validate()">
+	  <div class="container">
+	    <label><b>Username</b></label><br/>
+	    <input type="text" id="username" placeholder="Enter Username" name="username" required><br/>
+
+	    <label><b>Password</b></label><br/>
+	    <input type="password" placeholder="Enter Password" name="password" id="password" required><br/><br/>
+	        
+	    <button class="button"  type="submit">Login</button><br/>
+
+	  </div>
+
+	</form>
+	</div>
+
+</body>
+</html>
