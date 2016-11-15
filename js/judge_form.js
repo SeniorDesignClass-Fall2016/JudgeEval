@@ -60,7 +60,7 @@ $(function() {
             //category.innerHTML = "<h4>Category:</h4><br />";
 
             var designProject = document.createElement('div');
-            designProject.innerHTML = "<hr><h2>Design Project</h2><hr>";
+            designProject.innerHTML = "<h2>Design Project</h2>";
 
             var techaccuracy = document.createElement('div');
             techaccuracy.setAttribute("id", "techaccuracy"+z);
@@ -143,7 +143,7 @@ $(function() {
                                     +' <input class="calc'+z+'" type="radio" name="qanda'+z+'" value="5"> 5 <br><br>';
 
             var presentation = document.createElement('div');
-            presentation.innerHTML = "<hr><h2>Presentation</h2><hr>";
+            presentation.innerHTML = "<h2>Presentation</h2>";
 
             var organization = document.createElement('div');
             organization.setAttribute("id", "organization"+z);
@@ -205,7 +205,7 @@ $(function() {
                                 +'</tr></table>';
 
             var comment = document.createElement('div');
-            comment.innerHTML = '<h2>Comments</h2<hr><input type="textarea" name="comment'+z+'"><br>';
+            comment.innerHTML = '<h2>Comments</h2><br/><input type="textarea" name="comment'+z+'"><br>';
             
             //append all elements
             groupDiv.appendChild(projectId);
@@ -331,7 +331,7 @@ $(function() {
             console.log(data);
             $( "#projectEval" ).hide();
             if (data.trim() === "true") {
-                $( "#result" ).empty().append('<h2>Successfully Added</h2>'); 
+                $( "#result" ).empty().append('<div id="container"><div id="header">Successfully Added</div><br><br><p>Thank you!</p></div>'); 
             } else {
                 $( "#result" ).empty().append('<h2>' + data.trim() + '</h2>');
             } 

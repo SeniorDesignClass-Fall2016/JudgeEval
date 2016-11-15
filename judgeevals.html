@@ -3,33 +3,22 @@
 <head>
   <title>Senior Design Judge Evals</title>
   <link rel="stylesheet" type="text/css" href="judgeportal.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
   <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
   <script src="js/judge_form.js"></script>
 </head>
 <body>
-
-  <script type="text/javascript">
-   
-
-  </script>
-
-<form id="projectEval" method="post" action="server/judge_form.php">
-  
 <div id="container">
-  <div id="nav">
+  <div id="header">Senior Design Evaluation</div>
 
-  <!--input type="text" name="firstname" placeholder="First Name" required><br>
-  <input type="text" name="lastname" placeholder="Last Name" required><br>
-  
-    <input type="text" name="sessionnum" placeholder="Session Number" required><br>
-    <input type="text" name="roomnum" placeholder="Room Number" required--><br>
+  <form id="projectEval" method="post" action="server/judge_form.php">
+  <div id="container1">
+    <div id="nav">
+      <div id="formbuttons"> </div>  
+      <br><input type="submit" class="button" name="submit" value="Submit" ><br><br>
+    </div>
 
-  <div id="formbuttons"> </div>  
-  <br><input type="submit" class="button" name="submit" value="Submit" ><br><br>
-  </div>
-
-  <div id="form">
-
+    <div id="form"></div>
   </div>
 </div>
 </form>
