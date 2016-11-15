@@ -9,8 +9,11 @@ $(function() {
     //               lastname: document.getElementsByName('lastname')[0].value       
 
     var formCount;
-    //console.log("first name is "+mockGet.firstname);
-    $.get('server/judge_form.php', mockGet, function(data) {
+    var dataGet = { code: getQueryVariable("code"),
+                    firstname: getQueryVariable("firstname"),
+                    lastname: getQueryVariable("lastname") };
+
+    $.get('server/judge_form.php', dataGet, function(data) {
         console.log('Data Loading Get');
         console.log(data);
 
@@ -21,10 +24,10 @@ $(function() {
         //create form buttons dynamically based on length of array
         for (i = 0; i < formCount; i++){;
             var buttonNav = document.getElementById('formbuttons');
-        var btn = document.createElement('div');
-        var num = i+1;
+            var btn = document.createElement('div');
+            var num = i+1;
             btn.innerHTML = '<button type="button" class="buttonClass" onclick="showForm(this)" value="'+i+'" target="'+i+'">Group '+num+'</button><br/><br/>';
-        buttonNav.appendChild(btn);
+            buttonNav.appendChild(btn);
         }
         
         //create form dynamically based on length of array
@@ -203,6 +206,7 @@ $(function() {
 
             var comment = document.createElement('div');
             comment.innerHTML = '<h2>Comments</h2<hr><input type="textarea" name="comment'+z+'"><br>';
+            
             //append all elements
             groupDiv.appendChild(projectId);
             groupDiv.appendChild(title);
@@ -227,11 +231,12 @@ $(function() {
             groupDiv.appendChild(table);
             groupDiv.appendChild(comment);
 
-        formDiv.appendChild(groupDiv);
+            formDiv.appendChild(groupDiv);
 
         }
         //end for loop z
 
+        //function to sum all radio buttons in a single form
         $('input[type="radio"]').click(function(){
         //console.log($(this).parent().parent().attr('id'));
         var groupnum = $(this).parent().parent().attr('id'); // gets the groupform parent of clicked item (groupform#)
@@ -246,19 +251,15 @@ $(function() {
         });
 
 
-        //pulls from db from csv
+        //pulls from db from csv to prepopulate project descriptions
         for (j=0; j<formCount; j++){
             document.getElementById("projectid"+j).value = data[j].id;    
             $('#title'+j).append("<h4> Title: "+data[j].title+"</h4>");
             $('#description'+j).append("<h4> Description: "+data[j].description+"</h4>");
             $('#session'+j).append("<h4> Session: "+data[j].session+"</h4>");
             $('#category'+j).append("<h4> Category: "+data[j].category+"</h4>");
-        //console.log("id "+j+ " is "+data[j].id);
         
         }
-
-        //console.log("project id is "+document.getElementById("projectid").value);
-
 
     }); 
     $( "#projectEval").submit(function( event ) {
@@ -277,10 +278,10 @@ $(function() {
         
 //    }
     
-        //console.log("sum is "+document.getElementsByName('sum')[0].value);
        
         var allData = [];
-    //how to get this number dynamically
+    
+        //pushes each form as a dictionary into the array
         for(idIndex=0; idIndex<formCount; idIndex++){
             var newEntry = {"project_id": document.getElementById("projectid"+idIndex).value, 
                             "firstname": mockGet.firstname,
@@ -347,6 +348,8 @@ $(function() {
 
     
 });
+
+//shows form div based on which group button clicked
 function showForm(objButton){
     formNumber = objButton.value;
     $('.buttonClass').click(function(){
@@ -355,6 +358,7 @@ function showForm(objButton){
     });
 };
 
+//calculates the sum of the radiobuttons for each form
 function calcscore(groupnum, sumfield){
     var score = 0;
     // go through each radio button within the groupform
@@ -370,4 +374,17 @@ function calcscore(groupnum, sumfield){
     $('#'+groupnum+' input[type="text"]').val(score); // display score in the sumfield text area
 }
 
+//gets the GET value from URL
+//https://css-tricks.com/snippets/javascript/get-url-variables/
+function getQueryVariable(variable){
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for(var i=0; i<vars.length; i++){
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){
+            return pair[1];
+        }
+    }
+    return(false);
+}
 

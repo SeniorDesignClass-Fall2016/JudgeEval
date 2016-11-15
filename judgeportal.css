@@ -33,7 +33,7 @@ input[type=textarea], select {
 	cols="50"
 }
 	
-.button {
+.button , .buttonClass {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
