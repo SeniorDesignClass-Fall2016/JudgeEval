@@ -5,9 +5,11 @@ body {
 #container{
 	background-color: white;
 	padding: 50px;
-	margin: 1%;
+	margin: auto;
+	max-width: 1200px;
 	font-family: Calibri, sans-serif;
   	font-size: 1.3em;
+	overflow: hidden;
 }
 
 #header{
@@ -24,7 +26,6 @@ h1, h2{
 	padding: 20px 10px;
 }
 
-
 input[type="button"],input[type="submit"]{
 	background-color: #cb4e4e;
 	color: #fff;
@@ -34,7 +35,6 @@ input[type="button"],input[type="submit"]{
 	cursor: pointer;
 	padding: 20px 80px;
 	display: inline-block;
-	margin: 15px 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-weight: 700;
@@ -55,3 +55,38 @@ input[type="button"]:active,input[type="submit"]:active{
 	box-shadow: 0 0 #ab3c3c;
 	top: 6px;
 }
+
+
+.button , .buttonClass{
+	background-color: #cb4e4e;
+	color: #fff;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	cursor: pointer;
+	display: inline-block;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+  	padding: 10px 30px;
+	margin: -1px;
+	box-shadow: 0 6px #ab3c3c;
+}
+
+.button:hover , .buttonClass:hover{
+	background: #690521;
+	z-index: 1;
+	box-shadow: 0 6px #4D2F2F;
+}
+
+.button:active , .buttonClass:active{
+	box-shadow: 0 0 #ab3c3c;
+	top: 6px;
+}
+
+input[type="button"],input[type="submit"]{
+}
+
+
