@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Reports</title>
+  <script   src="https://code.jquery.com/jquery-2.2.4.js"  
+integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="  
+crossorigin="anonymous"></script>
+  
+  
+  <link href="admincss.css" type="text/css" rel="stylesheet" />
+  <link href="main.css" type="text/css" rel="stylesheet" />
+  <script src="js/settings.js"></script>
+    
+</head>
+<body>
+<div id="container">
+  <div id="header">Senior Design Conference
+  <div id="adminNav">
+      <ul>
+	<li><a href="adminView.html">Scores</a></li>
+	<li><a href="adminSettings.html">Settings</a></li>
+	<li><a href="">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <h1>Admin Settings</h1>
+  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+      <button id="btn-configure" type="button" class="button">Configure</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button id="btn-codes" type="button" class="button">View Codes</button>
+    </div>
+  </div>
+  
+  <div id="configure-view">
+    <h2>Configure</h2>
+    <form id="template-form" action="server/settings.php" method="post" >
+      <div class="description">
+          <p>Admins can update new information for new conferences. This system accepts CSV files using a specific template.<p>Please download the template and upload any new databases using this format.</p>
+      </div>
+      <input name="get_template" type="submit" value="Download Template (CSV)">
+    </form>
+
+    <h2>Upload New Senior Design Database</h2>
+      <div class="description">
+          <p>To update the database with new information, please select the file and upload it here.</p>
+      </div>
+    <form id="upload-form" action="server/settings.php" method="post" enctype="multipart/form-data">
+
+      File: <input type="file" name="fileToUpload" id="fileToUpload"  accept=".csv">
+      <input name="submit_file" type="submit" value="Upload Database (CSV)">
+    </form>
+
+  </div> 
+
+  <div id="code-view">
+    <h2>View Codes</h2>
+    <p>Judges will need a session code in order to submit evaluation forms.<br>Please distribute the following codes to the corresponding judges before the conference.</p>
+    <div id="session_table"></div>
+  </div>
+    
+</div>
+
+</body>
+</html>
+

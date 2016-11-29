@@ -26,7 +26,7 @@ $(function() {
             //}
 
             // The "Select All Sessions" Button and make it check all Sessions
-            $("#session").append('<input id="checkAll" type="checkbox" name="allsession" value="ALLSESS">Select All</input>');
+            $("#session").append('<div id="selectall"><input id="checkAll" type="checkbox" name="allsession" value="ALLSESS">Select All Sessions</input></div>');
             $("#checkAll").click(function(){
                     $('input:checkbox').not(this).prop('checked',this.checked);
             });
@@ -34,7 +34,7 @@ $(function() {
            // List each Session
            for (var key in sessionData) {
                 $("#session").append('<div class="'+key+'"></div>');
-                $('.'+key).append('<h2>'+key+' Sessions</h2>');
+                $('.'+key).append('<h3>'+key+' Sessions</h3>');
                 for(i = 0;i<sessionData[key]; i++){
                     $('.'+key).append('<input type="checkbox" name="session" value="' + key + " " + [i+1] + '">'+ [i+1] + '</input>');
                   //$('.'+key).hide();

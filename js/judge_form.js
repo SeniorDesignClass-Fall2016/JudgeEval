@@ -1,4 +1,3 @@
-
 $(function() { 
     var mockGet = { code: "12345",
                     firstname: "Christen3",
@@ -267,7 +266,7 @@ $(function() {
         }
 
     }); 
-                        
+						
     $( "#projectEval").submit(function( event ) {
     
     // VALIDATION - requiring required classes to be filled out
@@ -280,11 +279,11 @@ $(function() {
      event.preventDefault();
  
 
-    if(!confirm("Are you sure you want to submit the forms?")){
-        //event.preventDefault();
-        return;
-    };
-       
+	if(!confirm("Are you sure you want to submit the forms?")){
+		//event.preventDefault();
+		return;
+	};
+	   
 
 
         var allData = [];
@@ -361,13 +360,13 @@ function checkforms(){
     var total=0;
     var formnums = $(".grandtotal").length;
     $(".grandtotal").each(function(i,x){
-      //alert($(x).val());
-      if($(x).val()!=0){
-        total += 1;
-      }
+	  //alert($(x).val());
+	  if($(x).val()!=0){
+	    total += 1;
+	  }
     });
     if(total >= formnums){
-      $('#submitButton').removeAttr('disabled');
+	  $('#submitButton').removeAttr('disabled');
     };
 }
 
@@ -377,11 +376,11 @@ function showForm(objButton){
     $('.buttonClass').click(function(){
         $('.targetDiv').hide();
         $('#groupform'+formNumber).show();
-    $('.buttonClass').each(function(i,obj) {
-        $(obj).removeClass('currentButton'); // make all buttons not the current button
-    });
-    $(this).addClass('currentButton'); // make this clicked button the current page
-    
+	$('.buttonClass').each(function(i,obj) {
+	    $(obj).removeClass('currentButton'); // make all buttons not the current button
+	});
+	$(this).addClass('currentButton'); // make this clicked button the current page
+	
     });
 };
 
@@ -399,7 +398,7 @@ function calcscore(groupnum, sumfield){
 
     });
     $('#'+groupnum+' input[type="text"]').val(score); // display score in the sumfield text area
-    checkforms();
+	checkforms();
 }
 
 //gets the GET value from URL
