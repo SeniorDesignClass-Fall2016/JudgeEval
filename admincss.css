@@ -1,0 +1,13 @@
+body {
+	background-color: white;
+	margin: 20px;
+}
+
+.COEN, .MECH, .BIOE, .CENG, .INTR{
+	margin: 10px 0px;
+	padding: 15px;
+}
+
+#submit{
+	margin: 10px 0px;
+}

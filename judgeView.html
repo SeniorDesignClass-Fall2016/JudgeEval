@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Senior Design Judge Evals</title>
+  <title>Senior Design Evaluation</title>
   <link rel="stylesheet" type="text/css" href="judgeportal.css">
   <link rel="stylesheet" type="text/css" href="main.css">
   <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
@@ -10,12 +10,14 @@
 <body>
 <div id="container">
   <div id="header">Senior Design Evaluation</div>
-
   <form id="projectEval" method="post" action="server/judge_form.php">
   <div id="container1">
     <div id="nav">
-      <div id="formbuttons"> </div>  
-      <br><input type="submit" class="button" name="submit" value="Submit" ><br><br>
+  <div id="formbuttons"></div>  
+      <p></p>
+  <p>Only press "submit" when you have completed all the forms.</p>
+  <p></p>
+  <input type="submit" id="submitButton" class="button" name="submit" value="Submit" disabled="disabled"><br><br>
     </div>
 
     <div id="form"></div>
