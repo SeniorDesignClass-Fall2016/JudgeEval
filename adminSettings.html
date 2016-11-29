@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Reports</title>
+  <script   src="https://code.jquery.com/jquery-2.2.4.js"  
+integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="  
+crossorigin="anonymous"></script>
+  
+  
+  <link href="admincss.css" type="text/css" rel="stylesheet" />
+  <link href="main.css" type="text/css" rel="stylesheet" />
+  <script src="js/settings.js"></script>
+    
+</head>
+<body>
+<div id="container">
+  <div id="header">Settings</div>
+  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+      <button id="btn-configure" type="button" class="btn btn-default">Configure</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button id="btn-codes" type="button" class="btn btn-default">View Codes</button>
+    </div>
+  </div>
+  
+  <div id="configure-view">
+    <p> In Configure </p>
+    <form id="template-form" action="server/settings.php" method="post" >
+      <div class="description">
+          <p>This system accepts csv that are formatted according to a specified format. Please use the following template to ensure correctness</p>
+      </div>
+      <input name="get_template" type="submit" value="Download Template (CSV)">
+    </form>
+
+    <form id="upload-form" action="server/settings.php" method="post" enctype="multipart/form-data">
+
+      File: <input type="file" name="fileToUpload" id="fileToUpload"  accept=".csv">
+      <input name="submit_file" type="submit" value="Upload New Senior Design Database (CSV)">
+    </form>
+
+  </div> 
+
+  <div id="code-view">
+    <p>Distribute the following codes to the corresponding Judges</p>
+    <div id="session_table"></div>
+  </div>
+    
+</div>
+
+</body>
+</html>
+

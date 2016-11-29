@@ -553,13 +553,11 @@ function load_table_with_csv($csv_file_path) {
 }
 
 function download_template($delimiter=",") {
-    $sample_file = "test.csv";
+    $sample_file = "template.csv";
 
     $csv = array_map('str_getcsv', file($sample_file));
 
 
-    //header('Content-Type: application/csv');
-    //header('Content-Disposition: attachment; filename="db_template.csv";');
     header('Content-Description: File Transfer');
     header('Content-Type: application/force-download');
     header('Content-Disposition: attachment; filename='.basename($sample_file));
