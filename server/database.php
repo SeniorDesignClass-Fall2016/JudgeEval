@@ -12,11 +12,12 @@ $drop_if_project_exists_sql = "DROP TABLE IF EXISTS project";
 $drop_if_student_exists_sql = "DROP TABLE IF EXISTS student";
 $drop_if_advisor_exists_sql = "DROP TABLE IF EXISTS advisor";
 $drop_if_judge_exists_sql = "DROP TABLE IF EXISTS judge";
+$drop_if_session_code_exists_sql = "DROP TABLE IF EXISTS session_code";
 
 $create_project_sql = "CREATE TABLE project (
 id INT NOT NULL AUTO_INCREMENT,
 title VARCHAR(100) NOT NULL,
-description VARCHAR(255) NOT NULL,
+description VARCHAR(1000) NOT NULL,
 session VARCHAR(10) NOT NULL,
 category VARCHAR(30) NOT NULL,
 PRIMARY KEY (id)
@@ -75,13 +76,17 @@ FOREIGN KEY (project_id)
 PRIMARY KEY (id)
 ) ENGINE=INNODB";
 
-$SESSION_CODES = array("12345" => "COEN 1");
+$create_session_code_sql = "CREATE TABLE session_code (
+session VARCHAR(10) NOT NULL,
+code VARCHAR(6) NOT NULL
+) ENGINE=INNODB";
+
 
 function reset_database_schema() {
     global $db_host, $db_user, $db_pass, $db_name, $db_port;
     global $drop_if_student_exists_sql, $drop_if_judge_exists_sql;
-    global $drop_if_advisor_exists_sql, $drop_if_project_exists_sql;
-    global $create_project_sql, $create_student_sql, $create_advisor_sql, $create_judge_sql;
+    global $drop_if_advisor_exists_sql, $drop_if_project_exists_sql, $drop_if_session_code_exists_sql;
+    global $create_project_sql, $create_student_sql, $create_advisor_sql, $create_judge_sql, $create_session_code_sql;
     $conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);    
     if ($conn->connect_error) {
         return $conn->connect_error;
@@ -90,11 +95,13 @@ function reset_database_schema() {
     $conn->query($drop_if_judge_exists_sql);
     $conn->query($drop_if_advisor_exists_sql);
     $conn->query($drop_if_project_exists_sql);
+    $conn->query($drop_if_session_code_exists_sql);
 
     $conn->query($create_project_sql);
     $conn->query($create_student_sql);
     $conn->query($create_advisor_sql);
     $conn->query($create_judge_sql);
+    $conn->query($create_session_code_sql);
     $conn->close();
 }
 
@@ -165,7 +172,6 @@ function get_scores_by($method, $data) {
         }
         $session_string = "(".implode(",", $data).")";
         
-        //echo json_encode($session_string);
         $sql =  "SELECT ".$data_string." FROM judge
                  INNER JOIN project
                  ON judge.project_id=project.id
@@ -250,7 +256,11 @@ function prepare_score_data_for_csv($data) {
 function get_data_for_judgeform($code, $firstname, $lastname) {
     // THE FIRST PART OF THIS SHOULD PROBABLY BE PART OF AUTHENTATION METHOD
     global $db_host, $db_user, $db_pass, $db_name, $db_port;
-    global $SESSION_CODES; 
+    $SESSION_CODES = get_session_codes(); 
+    if (!$SESSION_CODES) {
+        return "NO SESSIONS";
+    }
+  
     if (!in_array($code, array_keys($SESSION_CODES))) {
         return "INVALID CODE";
     }
@@ -275,6 +285,7 @@ function get_data_for_judgeform($code, $firstname, $lastname) {
     //TODO: NEED TO GET THE STUDENTS BASED OFF OF THE PROJ ID 
     $conn->close();
     return $data;
+
 }
 
 function get_data_for_adminform() {
@@ -346,9 +357,96 @@ function get_data_for_adminform() {
                   );
 }
 
+function is_populated() {
+    global $db_host, $db_user, $db_pass, $db_name, $db_port; 
+    $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
+    $sql = "SELECT * FROM project";
+    $array = array();
+    
+    $result = $conn->query($sql);
+    if (!$result) {
+        return False;
+    }
+
+    while($value = $result->fetch_array(MYSQL_ASSOC)) {
+        $array[] = $value;
+    }
+    if (count($array)) {
+        return True;
+    } else {
+        return False;
+    }
+
+     
+}
+
+function get_session_codes() {
+    global $db_host, $db_user, $db_pass, $db_name, $db_port; 
+    $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
+
+    $sql = "SELECT code, session FROM session_code";
+    $result = $conn->query($sql); 
+    $codes_array = array();
+    while($codes = $result->fetch_array(MYSQLI_ASSOC)) {
+        $codes_array[$codes["code"]] = $codes["session"]; 
+    }
+    $conn->close();
+    return $codes_array;
+    
+}
+
+function generate_session_codes() {
+    global $db_host, $db_user, $db_pass, $db_name, $db_port; 
+    $conn = new mysqli($db_host , $db_user, $db_pass, $db_name, $db_port);
+
+    $unique_sessions = array();
+    $sql = "SELECT DISTINCT session FROM project";
+    $result = $conn->query($sql);
+    while( $codes = $result->fetch_array(MYSQLI_ASSOC)) {
+        $unique_sessions[] = $codes["session"];
+    }
+
+    if (!$unique_sessions) {
+        echo "No unique sessions"; 
+        return FALSE;  
+    } 
+
+    $session_count = count($unique_sessions);
+    $pinlength = 6;
+    $codes = array();
+    $charSet = '23456789abcdefghjkmnprstvwxyzABCDEFGHJKLMNPRSTVWXYZ'; 
+    
+    while($session_count > 0) {
+        $pin = '';
+        for($a = 0; $a < $pinlength; $a++) $pin .= $charSet[rand(0, strlen($charSet - 1))];  
+        if (!in_array($pin, $codes)) {
+            $codes[] = $pin;
+            $session_count -= 1;
+        }
+    } 
+    $values_string_array = array();
+    foreach($unique_sessions as $i => $sess) {
+        $values_string_array[] = "('".$sess."','".$codes[$i]."')"; 
+    }
+    $values_string = implode(",", $values_string_array);
+    
+    $sql = "INSERT INTO session_code (session, code) VALUES ".$values_string;
+
+    $result = $conn->query($sql);
+    $ret_val = True; 
+    if (!$result) {
+        echo "could not write";
+        $ret_val = False;
+    }
+    $conn->close();
+    
+    return $ret_val;
+}
+
 function load_table_with_csv($csv_file_path) {
     // Purpose: Loads data from file to the project, advisor, student tables
     // Input: The file path of the csv database
+    reset_database_schema();
 
     // Project Fields
     $PROJECT_COLUMNS = array("title", "description", "session", "category");
@@ -449,14 +547,40 @@ function load_table_with_csv($csv_file_path) {
         reset_database_schema();        
         return FALSE;
     } else {
-        return TRUE;
+        return generate_session_codes();
     }
 
 }
 
+function download_template($delimiter=",") {
+    $sample_file = "test.csv";
+
+    $csv = array_map('str_getcsv', file($sample_file));
+
+
+    //header('Content-Type: application/csv');
+    //header('Content-Disposition: attachment; filename="db_template.csv";');
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/force-download');
+    header('Content-Disposition: attachment; filename='.basename($sample_file));
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($sample_file)); 
+    
+    // open the "output" stream
+    // see http://www.php.net/manual/en/wrappers.php.php#refsect2-wrappers.php-unknown-unknown-unknown-descriptioq
+    $f = fopen('php://output', 'w');
+
+    foreach ($csv as $line) {
+        fputcsv($f, $line, $delimiter);
+    }
+
+     
+}
 function array_to_csv_download($data, $mode, $filename = "export.csv", $delimiter=",") {
         
-    //echo json_encode($data);
     $array = array();
       
     $array[] = array("Scoring Summary (By Title):", "Average Score");

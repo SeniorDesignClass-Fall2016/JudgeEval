@@ -5,13 +5,10 @@ $(function() {
         var teamData = formData['team'];
         var advisorData = formData['advisor'];
         var sessionData = formData['session'];  
-        //console.log(sessionData); //check sessions
-        //console.log(advisorData); //check advisors
-        //console.log(teamData); //check teams
-        console.log("PAGE IS UPDATED 1");
+
         
         if (!Object.keys(sessionData).length) {
-                $( "#session").append("<p> Sorry, No Departments</p>"); 
+            $( "#session").append("<p> Sorry, No Departments</p>"); 
                                 
         } else{
             // '<input type="radio" name="department" value="' + key + '">' + key
