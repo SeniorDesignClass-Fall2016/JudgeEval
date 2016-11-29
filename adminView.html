@@ -10,20 +10,31 @@ crossorigin="anonymous"></script>
   
   <link href="admincss.css" type="text/css" rel="stylesheet" />
   <link href="main.css" type="text/css" rel="stylesheet" />
-  <script src="js/admin_request.js"></script>
+  <script
+src="js/admin_request.js"></script>
     
 </head>
 <body>
 <div id="container">
 
 <div id="header">Senior Design Conference
+<div id="adminNav">
+      <ul>
+	<li><a href="adminView.html">Scores</a></li>
+	<li><a href="adminSettings.html">Settings</a></li>
+	<li><a href="">Logout</a></li>
+      </ul>
+    </div>
 </div>
 
-    <h1>Admin Panel</h1>
+    <h1>Admin Scores</h1>
+    <p>You can download all the evaluation form scores here. Please select how you would like to download them.</p>
     <form id="scorerequest" action="server/admin_request.php">
-      <input type="radio" name="querymode" value="session">Sessions!
-      <input type="radio" name="querymode" value="advisor">Advisor!
-      <input type="radio" name="querymode" value="team">Team!
+      <div id="formnav">
+	<div class="formnavitem"><input type="radio" name="querymode" value="session">Sessions</div>
+	<div class="formnavitem"><input type="radio" name="querymode" value="advisor">Advisor</div>
+	<div class="formnavitem"><input type="radio" name="querymode" value="team">Team</div>
+      </div>
       <br><br>
       <div id="session">    
       </div>
@@ -31,7 +42,7 @@ crossorigin="anonymous"></script>
       </div>
       <div id="team">
       </div>
-      <input id="submit" type="submit" value="Download Report (CSV)">
+      <input id="submit" type="submit" value="Submit">
     </form>
 </div>
 </body>

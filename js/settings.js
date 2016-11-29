@@ -13,6 +13,7 @@ $(function() {
             $("#session_table").empty();
             $("#session_table").append(data["session_table"]);
             $("#btn-codes").prop("disabled", false);
+	    $("#btn-configure").addClass('currentButton');
         }
     });
 
@@ -22,11 +23,15 @@ $(function() {
     $("#btn-configure").click(function() {
         $("#configure-view").show();
         $("#code-view").hide();
+	$(this).addClass('currentButton');
+	$("#btn-codes").removeClass('currentButton');
         
     });
     $("#btn-codes").click(function() {
         $("#configure-view").hide();
         $("#code-view").show();
+	$(this).addClass('currentButton');
+	$("#btn-configure").removeClass('currentButton');
     });
 
     $("#upload-form").submit(function(event) {

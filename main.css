@@ -1,90 +1,118 @@
 body {
-  background-color: #ebebeb;
+	background-color: #ebebeb;
 }
 
 #container{
-  background-color: white;
-  padding: 50px;
-  margin: auto;
-  max-width: 1200px;
-  font-family: Calibri, sans-serif;
-    font-size: 1.3em;
-  overflow: hidden;
+	background-color: white;
+	padding: 50px;
+	margin: auto;
+	max-width: 1200px;
+	font-family: Calibri, sans-serif;
+  	font-size: 1.3em;
+	overflow: hidden;
+}
+
+#success{
+	font-size: 2em;
+	margin: auto;
+	padding: 50px 100px;
+	background-color: #F2FFC9;
 }
 
 #header{
-  font: 3em Calibri, sans-serif;
-  font-weight: bold;
-  color: white;
-  background-color: #B30738;
-  padding: 30px 20px;
-  margin: -50px -50px 0px -50px;
+	font: 3em Calibri, sans-serif;
+	font-weight: bold;
+	color: white;
+	background-color: #B30738;
+	padding: 30px 20px;
+	margin: -50px -50px 0px -50px;
 }
 
 h1, h2{
-  border-bottom: 5px #B30738 solid;
-  padding: 20px 10px;
+	border-bottom: 5px #B30738 solid;
+	padding: 10px;
+}
+
+h3{
+	border-bottom: 5px #B30738 solid;
+	padding: 0px;
 }
 
 input[type="button"],input[type="submit"]{
-  background-color: #cb4e4e;
-  color: #fff;
-  border: none;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: pointer;
-  padding: 20px 80px;
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 700;
-  outline: none;
-  position: relative;
-    padding: 10px 50px 10px 50px;
-  margin: 10px;
-  box-shadow: 0 6px #ab3c3c;
+	background-color: #B30738;
+	color: #fff;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	cursor: pointer;
+	padding: 20px 80px;
+	display: inline-block;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+  	padding: 10px 50px 10px 50px;
+	margin: 10px;
+	box-shadow: 0 6px #82082B;
 }
 input[type="button"]:hover,input[type="submit"]:hover{
-  content: '';
-  background: #690521;
-  z-index: 1;
-  box-shadow: 0 6px #4D2F2F;
+	content: '';
+	background: #690521;
+	z-index: 1;
+	box-shadow: 0 6px #450A1B;
 }
 
 input[type="button"]:active,input[type="submit"]:active{
-  box-shadow: 0 0 #ab3c3c;
-  top: 6px;
+	box-shadow: 0 0 #ab3c3c;
+	top: 6px;
 }
 
+input[type="submit"]:disabled{
+	background-color: #C7C7C7;
+	box-shadow: 0 6px #A1A1A1;
+}
+
+#submitButton{
+	margin-left: -2px;
+}
 
 .button , .buttonClass{
-  background-color: #cb4e4e;
-  color: #fff;
-  border: none;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: pointer;
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 700;
-  outline: none;
-  position: relative;
-    padding: 10px 30px;
-  margin: -1px;
-  box-shadow: 0 6px #ab3c3c;
+	background-color: #B30738;
+	color: #fff;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	cursor: pointer;
+	display: inline-block;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+  	padding: 10px 30px;
+	margin: -1px;
+	box-shadow: 0 6px #82082B;
 }
 
 .button:hover , .buttonClass:hover{
-  background: #690521;
-  z-index: 1;
-  box-shadow: 0 6px #4D2F2F;
+	background: #690521;
+	z-index: 1;
+	box-shadow: 0 6px #450A1B;
 }
 
 .button:active , .buttonClass:active{
-  box-shadow: 0 0 #ab3c3c;
-  top: 6px;
+	box-shadow: 0 0 #ab3c3c;
+	top: 6px;
 }
 
-input[type="button"],input[type="submit"]{
+.currentButton{
+	background-color: #450A1B;
+	box-shadow: 0 0 #24050E;
+	top: 6px;
+}
+
+.currentButton:hover{
+	background-color: #690521;
+	box-shadow: 0 0 #24050E;
 }

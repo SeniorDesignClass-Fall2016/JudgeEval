@@ -1,13 +1,106 @@
 body {
-  background-color: white;
-  margin: 20px;
+	background-color: white;
+	margin: 20px;
 }
 
 .COEN, .MECH, .BIOE, .CENG, .INTR{
-  margin: 10px 0px;
-  padding: 15px;
+	margin: 10px 0px;
+	padding: 15px;
+}
+
+
+#selectall{
+	margin: 5px auto;
+	text-align: center;
+	padding: 10px;
+	border: 2px solid #B30738;
+	overflow: hidden;
+	margin-bottom: -40px;
+}
+
+#formnav{
+	margin: 5px auto;
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #D6D6D6;
+	overflow: hidden;
+	margin-bottom: -40px;
+}
+
+.formnavitem{
+	margin: 0 20px;
+	display: inline;
+}
+
+#adminNav ul {
+    list-style-type: none;
+    margin: 20px -20px -30px -20px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #82082B;
+}
+
+#adminNav li {
+    float: left;
+}
+
+#adminNav li a {
+    font-family: Calibri, sans-serif;
+    font-size: .4em;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 50px;
+    text-decoration: none;
+}
+
+#adminNav li a:hover {
+    background-color: #450A1B;
 }
 
 #submit{
-  margin: 10px 0px;
+	margin: 10px 0px;
+}
+
+.btn-group{
+	float:left;
+	margin: 5px 20px 20px 20px;
+}
+
+#configure-view, #code-view{
+	clear: both;
+}
+
+#upload-form{
+	margin: 10px auto;
+	text-align: center;
+	padding: 10px 0;
+	border: 1px solid #D6D6D6;
+}
+
+#session_table{
+	text-align: center;
+}
+
+table{
+	border:1px solid #ccc;
+	border-collapse: collapse;
+	width: 300px;
+	margin: auto;
+}
+
+table td{
+	padding: 5px 20px;
+	border:1px solid #ccc;
+	text-align: center;
+}
+
+tr:nth-child(1) {
+	border: none;
+	border-bottom: 5px solid #B30738;
+	font-size: 1.2em;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
 }
